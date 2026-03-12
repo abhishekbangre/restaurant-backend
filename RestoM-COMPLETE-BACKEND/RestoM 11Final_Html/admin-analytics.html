@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics | RestoM Admin Elite</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/admin-analytics.css" />
+    <link rel="stylesheet" href="css/admin-dashboard.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+          <a href="#" class="sidebar-logo"
+            ><img src="assets/admin-logo.png" alt="RestoM" />
+            
+          
+        </div>
+        <nav class="sidebar-nav">
+          <a href="admin-dashboard.html" class="nav-link"
+            ><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a
+          >
+          <a href="admin-orders.html" class="nav-link"
+            ><i class="bi bi-receipt-cutoff"></i><span>Orders</span></a
+          >
+          <a href="admin-menu.html" class="nav-link"
+            ><i class="bi bi-journal-text"></i><span>Menu List</span></a
+          >
+          <a href="admin-analytics.html" class="nav-link active"
+            ><i class="bi bi-bar-chart-line"></i><span>Analytics</span></a
+          >
+          <a href="admin-billing.html" class="nav-link"
+            ><i class="bi bi-wallet2"></i><span>Billing</span></a
+          >
+        </nav>
+        <div class="p-4 mt-auto">
+          <button
+            class="btn btn-outline-light w-100 rounded-pill border-opacity-10 py-2"
+            onclick="logout()"
+          >
+            Log Out
+          </button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-header">
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-light d-lg-none rounded-circle"
+              onclick="toggleSidebar()"
+            >
+              <i class="bi bi-list fs-4"></i>
+            </button>
+            <h4 class="mb-0">Sales Overview</h4>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="notification-wrap">
+              <button
+                class="btn btn-light rounded-circle shadow-sm notification-btn"
+                type="button"
+                id="adminNotificationBtn"
+              >
+                <i class="bi bi-bell-fill"></i>
+                <span class="notification-badge" id="adminNotificationBadge">0</span>
+              </button>
+              <div class="notification-dropdown" id="adminNotificationDropdown">
+                <div class="notification-title">Support Messages</div>
+                <div id="adminNotificationList" class="notification-list"></div>
+              </div>
+            </div>
+            <!-- Profile Dropdown -->
+            <div class="profile-wrap">
+              <button
+                class="btn profile-btn d-flex align-items-center gap-2"
+                type="button"
+                id="adminProfileBtn"
+              >
+                <div class="text-end d-none d-md-block">
+                  <h6 class="mb-0 fw-bold">Abishek Bangre</h6>
+                  <small class="text-muted">Master Admin</small>
+                </div>
+                <div
+                  class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 40px; height: 40px; font-weight: 700"
+                >
+                  A
+                </div>
+              </button>
+              <div class="profile-dropdown" id="adminProfileDropdown">
+                <a href="admin-profile.html" class="profile-dropdown-item">
+                  <i class="bi bi-person-gear"></i>
+                  <span>Profile Settings</span>
+                </a>
+                <div class="profile-dropdown-divider"></div>
+                <button class="profile-dropdown-item text-danger" onclick="logout()">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-container">
+          <div class="row g-4 mb-5">
+            <div class="col-sm-6 col-xl-3">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box primary">
+                  <i class="bi bi-currency-rupee"></i>
+                </div>
+                <div class="stat-info">
+                  <p> Total Revenue</p>
+                  <h3 id="revVal">₹42,850</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box success">
+                  <i class="bi bi-bag-check"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Orders</p>
+                  <h3 id="ordVal">128</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box warning">
+                  <i class="bi bi-lightning-charge"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Avg Ticket</p>
+                  <h3 id="avgVal">₹335</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box info">
+                  <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Active Menu</p>
+                  <h3 id="menuVal">42 Items</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+              <div class="chart-box-elite">
+                <div class="chart-header-elite">
+                  <h5>Revenue Forecast & Trend</h5>
+                </div>
+                <div style="height: 300px">
+                  <canvas id="revenueChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="chart-box-elite">
+                <div class="chart-header-elite"><h5>Order Fulfillment</h5></div>
+                <div style="height: 300px">
+                  <canvas id="statusChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="chart-box-elite">
+                <div class="chart-header-elite">
+                  <h5>Category Intelligence</h5>
+                </div>
+                <div style="height: 250px">
+                  <canvas id="categoryChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="chart-box-elite">
+                <div class="chart-header-elite">
+                  <h5>Top Performing Dishes</h5>
+                </div>
+                <div style="height: 250px">
+                  <canvas id="topItemsChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin-analytics.js"></script>
+  </body>
+</html>

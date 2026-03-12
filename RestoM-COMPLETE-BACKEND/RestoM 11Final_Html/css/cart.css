@@ -1,0 +1,338 @@
+:root {
+  --brand-primary: #ff4757;
+  --brand-dark: #1e2124;
+  --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #fcfcfc;
+  color: var(--brand-dark);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.navbar-brand {
+  font-family: "Outfit", sans-serif;
+}
+
+/* --- Navbar --- */
+.navbar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.8rem 0;
+  z-index: 1030;
+}
+
+.navbar-brand img {
+  height: 35px;
+  object-fit: contain;
+}
+
+/* --- Cart Item Card --- */
+.cart-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.cart-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-color: rgba(255, 71, 87, 0.15);
+}
+
+.cart-image {
+  width: 85px;
+  height: 85px;
+  object-fit: cover;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.cart-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-info h5 {
+  overflow-wrap: anywhere;
+}
+
+/* --- Quantity Control --- */
+.quantity-group {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.qty-btn {
+  border: none;
+  background: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: var(--transition);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.qty-btn:hover {
+  background: var(--brand-primary);
+  color: white;
+}
+
+/* --- Order Summary Panel --- */
+.summary-card {
+  background: white;
+  border-radius: 24px;
+  padding: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.summary-row.total {
+  color: var(--brand-dark);
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #ddd;
+}
+
+/* --- Checkout Button --- */
+.btn-checkout {
+  background: var(--brand-primary);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: 0 8px 20px rgba(255, 71, 87, 0.25);
+}
+
+.btn-checkout:hover:not(:disabled) {
+  background: #ff3344;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 71, 87, 0.35);
+}
+
+.btn-checkout:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Footer --- */
+.footer {
+  background: #111;
+  color: #888;
+  padding: 40px 0;
+  margin-top: 60px;
+}
+
+.footer p {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+/* --- Order Success Modal Styles --- */
+.success-icon-container {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.success-icon-container i {
+  color: #28a745;
+  font-size: 3.5rem;
+}
+
+.order-details-box {
+  border: 1px solid #e9ecef;
+  background: #f8f9fa !important;
+}
+
+#orderId {
+  color: var(--brand-primary);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+/* Center navbar items in mobile view */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    text-align: center;
+  }
+  .navbar-nav {
+    margin: 0 auto;
+    align-items: center;
+  }
+  .navbar-nav .nav-item {
+    display: inline-block;
+  }
+  .navbar-collapse .nav-link {
+    padding: 10px 20px;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 991px) {
+  main.py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    margin-top: 80px !important;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .cart-card {
+    flex-direction: column;
+    align-items: flex-start !important;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .cart-image {
+    width: 100%;
+    height: 150px;
+  }
+
+  .cart-info,
+  .cart-card .text-end {
+    width: 100%;
+  }
+
+  .cart-card .text-end {
+    text-align: left !important;
+  }
+
+  .cart-card .d-flex {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .quantity-group {
+    margin-top: 0.25rem;
+  }
+
+  .summary-card {
+    position: static;
+    top: 0;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .col-lg-4 {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  main.py-4 {
+    margin-top: 70px !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+
+  .cart-image {
+    height: 120px;
+  }
+
+  .cart-card {
+    border-radius: 16px;
+    padding: 0.9rem;
+  }
+
+  .quantity-group {
+    transform: scale(0.95);
+    transform-origin: left center;
+  }
+
+  .summary-card {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .summary-row {
+    font-size: 0.85rem;
+  }
+
+  .summary-row.total {
+    font-size: 1.1rem;
+  }
+
+  .btn-checkout {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .modal-body {
+    padding: 1rem !important;
+  }
+
+  .order-details-box {
+    padding: 0.75rem !important;
+  }
+
+  .footer {
+    padding: 20px 0;
+  }
+}

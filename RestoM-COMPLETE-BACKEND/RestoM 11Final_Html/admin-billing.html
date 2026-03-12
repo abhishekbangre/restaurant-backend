@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billing Management | RestoM Admin Elite</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="css/admin-billing.css" />
+    <link rel="stylesheet" href="css/admin-dashboard.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+          <a href="#" class="sidebar-logo"
+            ><img src="assets/admin-logo.png" alt="RestoM" />
+       
+        </div>
+        <nav class="sidebar-nav">
+          <a href="admin-dashboard.html" class="nav-link"
+            ><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></a
+          >
+          <a href="admin-orders.html" class="nav-link"
+            ><i class="bi bi-receipt-cutoff"></i><span>Orders</span></a
+          >
+          <a href="admin-menu.html" class="nav-link"
+            ><i class="bi bi-journal-text"></i><span>Menu List</span></a
+          >
+          <a href="admin-analytics.html" class="nav-link"
+            ><i class="bi bi-bar-chart-line"></i><span>Analytics</span></a
+          >
+          <a href="admin-billing.html" class="nav-link active"
+            ><i class="bi bi-wallet2"></i><span>Billing</span></a
+          >
+        </nav>
+        <div class="p-4 mt-auto">
+          <button
+            class="btn btn-outline-light w-100 rounded-pill border-opacity-10 py-2"
+            onclick="logout()"
+          >
+            Log Out
+          </button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-header">
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-light d-lg-none rounded-circle shadow-sm"
+              onclick="toggleSidebar()"
+            >
+              <i class="bi bi-list fs-4"></i>
+            </button>
+            <h4 class="mb-0">Billing Management </h4>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <div class="notification-wrap">
+              <button
+                class="btn btn-light rounded-circle shadow-sm notification-btn"
+                type="button"
+                id="adminNotificationBtn"
+              >
+                <i class="bi bi-bell-fill"></i>
+                <span class="notification-badge" id="adminNotificationBadge">0</span>
+              </button>
+              <div class="notification-dropdown" id="adminNotificationDropdown">
+                <div class="notification-title">Support Messages</div>
+                <div id="adminNotificationList" class="notification-list"></div>
+              </div>
+            </div>
+            <!-- Profile Dropdown -->
+            <div class="profile-wrap">
+              <button
+                class="btn profile-btn d-flex align-items-center gap-2"
+                type="button"
+                id="adminProfileBtn"
+              >
+                <div class="text-end d-none d-md-block">
+                  <h6 class="mb-0 fw-bold">Abishek Bangre</h6>
+                  <small class="text-muted">Master Admin</small>
+                </div>
+                <div
+                  class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 40px; height: 40px; font-weight: 700"
+                >
+                  A
+                </div>
+              </button>
+              <div class="profile-dropdown" id="adminProfileDropdown">
+                <a href="admin-profile.html" class="profile-dropdown-item">
+                  <i class="bi bi-person-gear"></i>
+                  <span>Profile Settings</span>
+                </a>
+                <div class="profile-dropdown-divider"></div>
+                <button class="profile-dropdown-item text-danger" onclick="logout()">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Log Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-container">
+          <div class="row g-4 mb-5">
+            <div class="col-md-4">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box primary">
+                  <i class="bi bi-bank"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Total Billed</p>
+                  <h3 id="totalBilled">₹0</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box success">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Net Collected</p>
+                  <h3 id="totalPaid">₹0</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-card-elite">
+                <div class="stat-icon-box warning">
+                  <i class="bi bi-hourglass-split"></i>
+                </div>
+                <div class="stat-info">
+                  <p>Arrears</p>
+                  <h3 id="totalPending">₹0</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="nav nav-tabs" id="billingTabs">
+            <li class="nav-item">
+              <button
+                class="nav-link active"
+                data-bs-toggle="tab"
+                onclick="renderLedger('all')"
+              >
+                All Transactions
+              </button>
+            </li>
+            <li class="nav-item">
+              <button
+                class="nav-link"
+                data-bs-toggle="tab"
+                onclick="renderLedger('unpaid')"
+              >
+               Pending Payments
+              </button>
+            </li>
+            <li class="nav-item">
+              <button
+                class="nav-link"
+                data-bs-toggle="tab"
+                onclick="renderLedger('paid')"
+              >
+                Complete Payments
+              </button>
+            </li>
+          </ul>
+
+          <div class="data-table-card">
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Total</th>
+                    <th>Mode</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="billingTableBody"></tbody>
+              </table>
+            </div>
+            <div id="paginationContainer" class="mt-4"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal fade" id="viewDetailsModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+          <div class="modal-header">
+            <h5 class="modal-title">Receipt View</h5>
+            <div class="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                class="btn btn-sm btn-dark d-flex align-items-center gap-1"
+                id="printBillBtn"
+                onclick="printCurrentBill()"
+              >
+                <i class="bi bi-printer"></i><span>Print</span>
+              </button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body p-4" id="viewDetailsBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+          <div class="modal-header">
+            <h5 class="modal-title h4">Settle Invoice</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <input type="hidden" id="paymentBillId" />
+            <div class="mb-4">
+              <label
+                class="form-label small fw-bold text-muted text-uppercase mb-2"
+                >Select Payment Channel</label
+              >
+              <select
+                class="form-select border-0 bg-light p-3 rounded-4 fw-bold"
+                id="paymentMethod"
+              >
+                <option value="Cash"> Cash</option>
+                <option value="UPI">Digital UPI / QR</option>
+                <option value="Card">Visa / Mastercard</option>
+              </select>
+            </div>
+            <button
+              class="btn btn-primary w-100 rounded-pill py-3 fw-bold"
+              onclick="confirmPayment()"
+            >
+              Pay Bill
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin-billing.js"></script>
+  </body>
+</html>
